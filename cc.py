@@ -1,8 +1,8 @@
 #!/usr/bin/python3
-#Coded by L330n123
+#Coded by Sm3R
 #########################################
 #         Just a little change          #
-#                           -- L330n123 #
+#                           --  #Sm3R
 #########################################
 import requests
 import socket
@@ -25,7 +25,7 @@ print ('''
 	  CCCCC/   CCCCC/   |___________|/
 >--------------------------------------------->
 Version 3.6 (2020/12/19)
-							C0d3d by L330n123
+							C0d3d by Sm3R
 ┌─────────────────────────────────────────────┐
 │        Tos: Don't attack .gov website       │
 ├─────────────────────────────────────────────┤
@@ -34,7 +34,7 @@ Version 3.6 (2020/12/19)
 │          [+] Changed Output                 │
 │          [+] Added Url Parser               │
 ├─────────────────────────────────────────────┤
-│ Link: https://github.com/Leeon123/CC-attack │
+│ Telegram : t.me/imsmer │
 └─────────────────────────────────────────────┘''')
 
 acceptall = [
@@ -723,4 +723,4 @@ def main():
 	
 
 if __name__ == "__main__":
-	main()#Coded by Leeon123
+	main()#Coded by Sm3R
